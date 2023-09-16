@@ -33,7 +33,7 @@ useEffect( ()=>{
 movieList.map(async (movie, index) => {
   
       try {
-      index < 20 && await axios.get(`${movie}`, HEADER)
+      index < 50 && await axios.get(`${movie}`, HEADER)
        .then(res =>  {  
     setMovies(movies => [...movies, res.data])
     setLoading(false)
