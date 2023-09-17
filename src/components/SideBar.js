@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 const SideBar = () => {
   return (
-    <div className='w-[226px] h-[100vh] border-[1px] border-[#666] hidden md:block py-[52px] rounded-r-[45px] flex flex-col justify-between flex-none'>
+    <div className='w-[226px] h-[100vh] border-[1px] border-[#666] hidden py-[52px] rounded-r-[45px] md:flex md:flex-col justify-between flex-none'>
        
        <Link to={`/`} >
           <div className='flex justify-center items-center gap-2'>

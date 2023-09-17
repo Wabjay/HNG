@@ -11,18 +11,12 @@ const SearchBar = () => {
 
 
 
-// const searchHandler =()=>{
-//   movies.filter(movie => (movie.title.includes(value)) && setMovielist(movies => [...movies, movie]));
-//   // movies.filter(movie => movie.title.includes(value).map( movie => setMovielist(movies => [...movies, movie])));
-//   console.log(value)
-// }
-
 
 const searchHandler =(e)=>{
   e.preventDefault()
   setLoading(true)
   try {
-    axios.get( `https://api.themoviedb.org/3/search/movie?query=${value}`, HEADER)
+    axios.get( `https://api.themoviedb.org/3/search/movie?query=${value}&include_adult=false`, HEADER)
   .then(res =>  {  
       res.data.results.map(movie => setMovies(movies => [...movies, movie]))
       console.log(res)

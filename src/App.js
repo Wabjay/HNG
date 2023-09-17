@@ -12,18 +12,20 @@ function App() {
   const [movieList, setMovielist] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
+  const [errMsg, setErrmsg] = useState('')
+  
 
 
   useEffect(() =>{
     setLoading(true)
     try {
-      axios.get( "changes?page=2", HEADER)
+      axios.get( "changes?page=1&include_adult=false", HEADER)
     .then(res =>  {  
         res.data.results.map(movie => setMovielist(movies => [...movies, movie.id]))
         setLoading(false)
     })
     } catch (err) {
-      console.log(err)
+      setErrmsg(err)
     setLoading(false)
 
     }
@@ -40,7 +42,7 @@ movieList.map(async (movie, index) => {
 })
        
       } catch (err) {
-        console.log(err);
+        setErrmsg(err)
       }
     });
 },[movieList])
@@ -50,7 +52,7 @@ movieList.map(async (movie, index) => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home movies={movies}/>} />
+          <Route exact path="/" element={<Home movies={movies} loader={loading}/>} />
           <Route exact path="/movie/:id" element={<Detail />} />
         </Routes>
       </BrowserRouter>
