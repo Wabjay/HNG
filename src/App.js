@@ -8,51 +8,52 @@ import { HEADER } from './constant/header';
 
 function App() {
 
-  
+
   const [movieList, setMovielist] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
   const [errMsg, setErrmsg] = useState('')
-  
 
 
-  useEffect(() =>{
+
+  useEffect(() => {
     setLoading(true)
     try {
-      axios.get( "changes?page=1&include_adult=false", HEADER)
-    .then(res =>  {  
-        res.data.results.map(movie => setMovielist(movies => [...movies, movie.id]))
-        setLoading(false)
-    })
+      axios.get("changes?page=1&include_adult=false", HEADER)
+        .then(res => {
+          res.data.results.map(movie => setMovielist(movies => [...movies, movie.id]))
+          setLoading(false)
+        })
     } catch (err) {
       setErrmsg(err)
-    setLoading(false)
+      setLoading(false)
 
     }
-},[])
+  }, [])
 
-useEffect( ()=>{
-movieList.map(async (movie, index) => {
-  
+  useEffect(() => {
+    movieList.map(async (movie, index) => {
+
       try {
-      index < 50 && await axios.get(`${movie}`, HEADER)
-       .then(res =>  {  
-    setMovies(movies => [...movies, res.data])
-    setLoading(false)
-})
-       
+        index < 50 && await axios.get(`${movie}`, HEADER)
+          .then(res => {
+            setMovies(movies => [...movies, res.data])
+            setLoading(false)
+          })
+
       } catch (err) {
         setErrmsg(err)
       }
     });
-},[movieList])
+  }, [movieList])
 
 
   return (
     <div>
+      {errMsg && <h1 className='bg-rose-700 px-3 w-fit fixed top-5 right-3 z-[50] text-[32px] text-white'>{errMsg} ERROR</h1>}
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home movies={movies} loader={loading}/>} />
+          <Route exact path="/" element={<Home movies={movies} loader={loading} />} />
           <Route exact path="/movie/:id" element={<Detail />} />
         </Routes>
       </BrowserRouter>

@@ -7,36 +7,36 @@ import { HEADER } from '../constant/header'
 
 const Detail = () => {
   const { id } = useParams()
-const [movie, setMovie] = useState({})
-const [movieDetails, setMovieDetails] = useState({})
-const [loading, setLoading] = useState(false)
+  const [movie, setMovie] = useState({})
+  const [movieDetails, setMovieDetails] = useState({})
+  const [loading, setLoading] = useState(false)
 
-  
-useEffect( ()=> {
-  setLoading(true)
-        try {
-         axios.get(`${id}`, HEADER)
-         .then(res =>  {  
-      setMovie(res.data)
-      setLoading(false)  
-  })
-         
-        } catch (err) {
-          console.log(err);
+
+  useEffect(() => {
+    setLoading(true)
+    try {
+      axios.get(`${id}`, HEADER)
+        .then(res => {
+          setMovie(res.data)
           setLoading(false)
-        }
-      },[]);
+        })
 
-      useEffect( ()=> {
-           
-           setMovieDetails(movie)
-            },[movie]);
+    } catch (err) {
+      console.log(err);
+      setLoading(false)
+    }
+  }, []);
+
+  useEffect(() => {
+
+    setMovieDetails(movie)
+  }, [movie]);
 
   return (
     !loading &&
-    <div  className='md:flex'>
+    <div className='md:flex'>
       <SideBar />
-   <DetailContent movies={movieDetails}/>
+      <DetailContent movies={movieDetails} />
     </div>
   )
 }
